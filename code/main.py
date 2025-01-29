@@ -1,6 +1,7 @@
 from settings import *
 from support import *
 from entities import *
+from deck import *
 
 class Game:
     def __init__(self):
@@ -9,13 +10,21 @@ class Game:
         pygame.display.set_caption('slay the spire')
         self.clock = pygame.time.Clock()
         self.running = True
+        self.deck = Deck()
 
         # groups 
         self.all_sprites = pygame.sprite.Group()
+        self.cards = pygame.sprite.Group()
 
         # data
         self.player = Player(pygame.image.load(join('images', 'entities', 'ironclad.webp')).convert_alpha(), self.all_sprites)
         self.enemies = Enemies('cultist', pygame.image.load(join('images', 'entities', 'cultist.webp')).convert_alpha(), self.all_sprites)
+
+        # cards
+        self.deck.start_deck()
+
+    def input(self):
+        pass
 
     def import_assetes(self):
         pass
