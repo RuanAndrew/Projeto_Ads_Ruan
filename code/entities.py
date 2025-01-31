@@ -1,6 +1,6 @@
 from settings import *
 
-class entities:
+class Monsters:
     def get_data(self, name):
         self.hp = self.max_hp = ENEMY_DATA[name]['hp']
         self.moves = ENEMY_DATA[name]['moves']
@@ -17,9 +17,9 @@ class Player(pygame.sprite.Sprite):
         self.gold = 99
         self.relics = ['burning blood']
         
-class Enemies(pygame.sprite.Sprite, entities):
+class Enemies(pygame.sprite.Sprite, Monsters):
     def __init__(self, name, surf, groups):
         super().__init__(groups)
         self.image = pygame.transform.scale_by(surf, 0.35)
         self.rect = self.image.get_frect(midbottom = (WINDOW_WIDTH / 4 + WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 150))
-        # self.get_data(name)
+        self.get_data(name)
