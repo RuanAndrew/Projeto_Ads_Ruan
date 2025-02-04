@@ -1,18 +1,21 @@
 from settings import *
 from entities import *
+# from main import function
 
 # ui temporaria copiada da internet para testar os efeitos das cartas e ataques
 
 class UI:
-    def __init__(self):
+    def __init__(self, hand_cards, aplay_card_attack):
         self.display_surface = pygame.display.get_surface()
         self.font = pygame.font.Font(None, 30)
         self.left = WINDOW_WIDTH / 2 - 250 
         self.top = WINDOW_HEIGHT / 2 + 100
+        self.hand_cards = hand_cards
+        self.aplay_card_attack = aplay_card_attack
         # self.player = Player()
 
         # control 
-        self.general_options = ['bash', 'defend', 'strike', 'none']
+        self.general_options = ['Bash', 'Defend', 'Strike', 'None']
         self.general_index = {'col': 0, 'row': 0}
         self.state = 'general'
         self.rows, self.cols = 2,2
@@ -23,7 +26,13 @@ class UI:
             self.general_index['row'] = (self.general_index['row'] + int(keys[pygame.K_DOWN]) - int(keys[pygame.K_UP])) % self.rows
             self.general_index['col'] =  (self.general_index['col'] + int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])) % self.cols
             if keys[pygame.K_SPACE]:
-                pass
+                if self.general_index['row'] == 0 and self.general_index['col'] == 0:
+                    # name = self.hand_cards[0]
+                    # self.aplay_card_attack(name)
+                    # function.deal()
+                    pass
+
+                
 
     def quad_select(self, index, options):
         # bg

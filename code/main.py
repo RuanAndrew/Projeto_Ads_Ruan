@@ -4,6 +4,10 @@ from entities import *
 from deck import *
 from ui import UI
 
+class function:
+    def deal(self, damage, target, times = 1):
+        target.hp -= damage * times
+
 class Game:
     def __init__(self):
         pygame.init()
@@ -23,10 +27,16 @@ class Game:
         self.enemies = Enemies(monster_name, pygame.image.load(join('images', 'entities', f'{monster_name}.webp')).convert_alpha(), self.all_sprites)
 
         # ui
-        self.ui = UI()
+        self.ui = UI(self.deck.hand_cards, self.apply_card_attack)
 
         # cards
         self.deck.start_deck()
+
+    def apply_card_attack(self, name):
+        card_attack = CARDS_DATA[name]['description']
+        card_attack = str(card_attack).split(",")
+        for func in card_attack:
+            func
 
     def input(self):
         pass
@@ -44,6 +54,7 @@ class Game:
             # update
             self.all_sprites.update(dt)
             self.ui.update()
+            # print(self.enemies.hp)
 
             # draw
             self.display_surface.blit(pygame.transform.scale(pygame.image.load(join('images', 'other', 'background.webp')).convert_alpha(),(WINDOW_WIDTH, WINDOW_HEIGHT)))

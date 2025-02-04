@@ -28,12 +28,12 @@ class Deck:
                     self.draw_pile.append(cards)
 
     def start_deck(self):
-        self.deck = Deck()
-        self.deck.add_cards('Strike.webp', 5)
-        self.deck.add_cards('Defend.webp', 4)
-        self.deck.add_cards('Bash.webp', 1)
-        self.deck.shuffle()
-        self.deck.draw(5)
+        # self.deck = Deck()
+        self.add_cards('Strike', 5)
+        self.add_cards('Defend', 4)
+        self.add_cards('Bash', 1)
+        self.shuffle()
+        self.draw(5)
 
     def get_data_cards(self, name):
         self.name = name
@@ -47,9 +47,3 @@ class Deck:
             self.draw_pile.copy(self.discard_pile)
             self.deck.shuffle()
             self.discard_pile.clear()
-
-    # card powers
-
-    def deal(self, damage, times = 0):
-        self.damage = damage
-        self.times = times
