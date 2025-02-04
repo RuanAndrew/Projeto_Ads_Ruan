@@ -1,10 +1,10 @@
 from settings import *
+from ui import UI
 
 class Monsters:
     def get_data(self, name):
         self.hp = self.max_hp = ENEMY_DATA[name]['hp']
         self.moves = ENEMY_DATA[name]['moves']
-        self.name = name
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, surf, groups):

@@ -50,6 +50,6 @@ class Deck:
 
     # card powers
 
-    def deal(self, damage, target, times = 0):
+    def deal(self, damage, times = 0):
         self.damage = damage
-        self.target = target
+        self.times = times

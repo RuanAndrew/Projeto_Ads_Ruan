@@ -2,6 +2,7 @@ from settings import *
 from support import *
 from entities import *
 from deck import *
+from ui import UI
 
 class Game:
     def __init__(self):
@@ -17,8 +18,12 @@ class Game:
         self.cards = pygame.sprite.Group()
 
         # data
+        monster_name = choice(list(ENEMY_DATA.keys()))
         self.player = Player(pygame.image.load(join('images', 'entities', 'ironclad.webp')).convert_alpha(), self.all_sprites)
-        self.enemies = Enemies('cultist', pygame.image.load(join('images', 'entities', 'cultist.webp')).convert_alpha(), self.all_sprites)
+        self.enemies = Enemies(monster_name, pygame.image.load(join('images', 'entities', f'{monster_name}.webp')).convert_alpha(), self.all_sprites)
+
+        # ui
+        self.ui = UI()
 
         # cards
         self.deck.start_deck()
@@ -38,10 +43,12 @@ class Game:
            
             # update
             self.all_sprites.update(dt)
+            self.ui.update()
 
             # draw
             self.display_surface.blit(pygame.transform.scale(pygame.image.load(join('images', 'other', 'background.webp')).convert_alpha(),(WINDOW_WIDTH, WINDOW_HEIGHT)))
             self.all_sprites.draw(self.display_surface)
+            self.ui.draw()
             pygame.display.update()
         
         pygame.quit()

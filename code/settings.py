@@ -1,12 +1,25 @@
 import pygame
 from os.path import join 
 from os import walk
+from random import randint, choice
 
 WINDOW_WIDTH, WINDOW_HEIGHT = 1280,720
 
+COLORS = {
+    'black': '#000000',
+    'red': '#ee1a0f',
+    'gray': 'gray',
+    'white': '#ffffff',
+}
+
 ENEMY_DATA = {
-    'cultist': {'hp': 51,
-                'moves': ('incantation', 'dark Strike')}
+    'cultist': {'hp': randint(48,54),
+                'moves': {'incantation': ('gain(3, ritual)'),
+                           'dark Strike': ('deal(6)')}},
+    'jaw_worm': {'hp': randint(40,44),
+                 'moves': {'chomp': ('deal(11)'),
+                           'thrash': ('deal(7)', 'gain(5, block)'),
+                           'bellow': ('gain(3, strength)', 'gain(6, block)')}}
 }
 
 CARDS_DATA = {
