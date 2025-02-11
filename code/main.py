@@ -4,10 +4,6 @@ from entities import *
 from deck import *
 from ui import UI
 
-class function:
-    def deal(self, damage, target, times = 1):
-        target.hp -= damage * times
-
 class Game:
     def __init__(self):
         pygame.init()
@@ -15,19 +11,24 @@ class Game:
         pygame.display.set_caption('slay the spire')
         self.clock = pygame.time.Clock()
         self.running = True
-        self.deck = Deck()
+        self.active_box = None
 
         # groups 
         self.all_sprites = pygame.sprite.Group()
-        self.cards = pygame.sprite.Group()
+        self.cards_groups = pygame.sprite.Group()
 
         # data
-        monster_name = choice(list(ENEMY_DATA.keys()))
+        self.all_cards = card_folder_importer('images', 'cards')
+        # self.card = [Card(card, self.all_cards[card], (self.all_sprites, self.cards_groups)) for card in list(self.all_cards.keys())]
+        self.deck = Deck(self.all_cards)
+
         self.player = Player(pygame.image.load(join('images', 'entities', 'ironclad.webp')).convert_alpha(), self.all_sprites)
+
+        monster_name = choice(list(ENEMY_DATA.keys()))
         self.enemies = Enemies(monster_name, pygame.image.load(join('images', 'entities', f'{monster_name}.webp')).convert_alpha(), self.all_sprites)
 
         # ui
-        self.ui = UI(self.deck.hand_cards, self.apply_card_attack)
+        self.ui = UI(self.deck.hand_cards, self.all_cards, self.apply_card_attack, self.player, self.enemies)
 
         # cards
         self.deck.start_deck()
@@ -41,20 +42,16 @@ class Game:
     def input(self):
         pass
 
-    def import_assetes(self):
-        pass
-
     def run(self):
         while self.running:
             dt = self.clock.tick() / 1000
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
-           
+
             # update
             self.all_sprites.update(dt)
             self.ui.update()
-            # print(self.enemies.hp)
 
             # draw
             self.display_surface.blit(pygame.transform.scale(pygame.image.load(join('images', 'other', 'background.webp')).convert_alpha(),(WINDOW_WIDTH, WINDOW_HEIGHT)))

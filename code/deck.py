@@ -1,11 +1,10 @@
 from settings import *
-from support import *
-from random import shuffle
-from time import sleep
+from support import card_folder_importer
 
-class Deck:
-    def __init__(self):
-        self.all_cards = folder_importer('images', 'cards')
+class Deck(pygame.sprite.Sprite):
+    def __init__(self, all_cards):
+        super().__init__()
+        self.all_cards = all_cards
         self.draw_pile = []
         self.discard_pile = []
         self.hand_cards = []
@@ -13,7 +12,7 @@ class Deck:
     def shuffle(self):
         shuffle(self.draw_pile)
 
-    def draw(self, amount = 5):
+    def draw(self, amount = 1):
         c = 0
         while c < amount:
             self.hand_cards.append(self.draw_pile.pop(0))
@@ -28,7 +27,6 @@ class Deck:
                     self.draw_pile.append(cards)
 
     def start_deck(self):
-        # self.deck = Deck()
         self.add_cards('Strike', 5)
         self.add_cards('Defend', 4)
         self.add_cards('Bash', 1)
@@ -45,5 +43,9 @@ class Deck:
     def shuffle_discard_pile(self):
         if len(self.draw_pile) == 0:
             self.draw_pile.copy(self.discard_pile)
-            self.deck.shuffle()
+            self.shuffle()
             self.discard_pile.clear()
+
+class Card(pygame.sprite.Sprite):
+    def __init__(self, name, surf, *groups):
+        super().__init__(groups)

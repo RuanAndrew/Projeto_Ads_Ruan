@@ -1,7 +1,7 @@
 import pygame
 from os.path import join 
 from os import walk
-from random import randint, choice
+from random import randint, choice, shuffle
 
 WINDOW_WIDTH, WINDOW_HEIGHT = 1280,720
 
