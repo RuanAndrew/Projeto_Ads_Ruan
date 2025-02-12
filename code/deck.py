@@ -1,30 +1,28 @@
 from settings import *
-from support import card_folder_importer
 
-class Deck(pygame.sprite.Sprite):
-    def __init__(self, all_cards):
+class Deck():
+    def __init__(self, all_cards, card_group):
         super().__init__()
         self.all_cards = all_cards
         self.draw_pile = []
         self.discard_pile = []
         self.hand_cards = []
+        self.card_group = card_group
         
     def shuffle(self):
         shuffle(self.draw_pile)
 
     def draw(self, amount = 1):
-        c = 0
-        while c < amount:
+        for _ in range(amount):
+            if not self.draw_pile:
+                self.shuffle_discard_pile()
+                if not self.draw_pile:
+                    break
             self.hand_cards.append(self.draw_pile.pop(0))
-            c += 1
 
     def add_cards(self, name, amount):
-        cont = 0
-        while cont < amount:
-            for cards in self.all_cards:
-                if name == str(cards):
-                    cont += 1
-                    self.draw_pile.append(cards)
+        for _ in range(amount):
+            self.draw_pile.append(Card(name, self.all_cards[name], self.card_group))
 
     def start_deck(self):
         self.add_cards('Strike', 5)
@@ -33,19 +31,17 @@ class Deck(pygame.sprite.Sprite):
         self.shuffle()
         self.draw(5)
 
-    def get_data_cards(self, name):
-        self.name = name
-        self.rarity = CARDS_DATA[name]['rarity']
-        self.type = CARDS_DATA[name]['type']
-        self.energy = CARDS_DATA[name]['energy']
-        self.descripition = CARDS_DATA[name]['description']
-
     def shuffle_discard_pile(self):
-        if len(self.draw_pile) == 0:
-            self.draw_pile.copy(self.discard_pile)
+        if self.discard_pile:
+            self.draw_pile = self.discard_pile[:]
             self.shuffle()
-            self.discard_pile.clear()
+            self.discard_pile = []
 
 class Card(pygame.sprite.Sprite):
-    def __init__(self, name, surf, *groups):
-        super().__init__(groups)
+    def __init__(self, name, surf, card_group):
+        super().__init__(card_group)
+        self.name = name
+        self.surf = surf
+        self.data = CARDS_DATA[name]
+        self.image = pygame.transform.scale_by(surf, 0.25)
+        self.rect = self.image.get_frect()

@@ -14,28 +14,28 @@ COLORS = {
 
 ENEMY_DATA = {
     'cultist': {'hp': randint(48,54),
-                'moves': {'incantation': ('gain(3, ritual)'),
-                           'dark Strike': ('deal(6)')}},
+                'moves': {'incantation': ('gain', 3, 'ritual'),
+                           'dark Strike': ('deal', 6)}},
     'jaw_worm': {'hp': randint(40,44),
-                 'moves': {'chomp': ('deal(11)'),
-                           'thrash': ('deal(7)', 'gain(5, block)'),
-                           'bellow': ('gain(3, strength)', 'gain(6, block)')}}
+                 'moves': {'chomp': ('deal', 11),
+                           'thrash': (('deal' ,7), ('gain', 5, 'block')),
+                           'bellow': (('gain', 3 , 'strength'), ('gain', 6, 'block'))}}
 }
 
 CARDS_DATA = {
     'Bash': {'rarity': 'starter',
-              'type': 'attack',
-              'energy': 2,
-              'description': 'deal(8, self.enemies),apply(2, vulnerable)',
-              'is_upgrade': 'deal(10, self.enemies),apply(3, vulnerable)'},
+             'type': 'attack',
+             'energy': 2,
+             'description': [('deal', 8), ('apply', 2, 'vulnerable')],
+             'is_upgrade': [('deal', 10), ('apply', 3, 'vulnerable')]},
     'Defend': {'rarity': 'starter',
-              'type': 'skill',
-              'energy': 1,
-              'description': 'gain(5, block)',
-              'is_upgrade': 'gain(8, block)'},
+               'type': 'skill',
+               'energy': 1,
+               'description': [('gain', 5, 'block')],
+               'is_upgrade': [('gain', 8, 'block')]},
     'Strike': {'rarity': 'starter',
-              'type': 'attack',
-              'energy': 1,
-              'description': 'deal(6, self.enemies)',
-              'is_upgrade': 'deal(9, self.enemies)'}
+               'type': 'attack',
+               'energy': 1,
+               'description': [('deal', 6)],
+               'is_upgrade': [('deal', 9)]}
 }
