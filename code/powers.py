@@ -10,3 +10,5 @@ def gain(target, amount, stat):
 def apply(target, amount, stat):
     if stat == 'vulnerable':
         target.vulnerable = amount
+    elif stat == 'weak':
+        target.weak = amount
